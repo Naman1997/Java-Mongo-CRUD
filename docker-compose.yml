@@ -1,0 +1,15 @@
+version: '3'
+services:
+    app:
+        container_name: docker-micronaut-mongo
+        restart: always
+        build: .
+        ports: 
+            - '8080:8080'
+        links: 
+            - mongodb
+    mongo:
+        container_name: mongodb
+        image: mongo
+        ports: 
+            - '27017:27017'

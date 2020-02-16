@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: crud
+---
+testFramework: junit
+sourceLanguage: java
