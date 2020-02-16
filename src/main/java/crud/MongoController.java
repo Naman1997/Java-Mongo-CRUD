@@ -1,35 +1,35 @@
 package crud;
 
+import Database.Connection;
+
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.DeleteResult;
-import com.mongodb.reactivestreams.client.MongoClient;
-import com.mongodb.reactivestreams.client.MongoCollection;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
 import io.micronaut.validation.Validated;
 import io.reactivex.Flowable;
-import io.reactivex.Maybe;
 import io.reactivex.Single;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.bson.Document;
 import org.bson.conversions.Bson;
 
+import javax.inject.Singleton;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
 
 @Controller("/")
+@Singleton
 @Validated
 public class MongoController {
 
-    private final MongoClient mongoClient;
 
-    public MongoController(MongoClient mongoClient) {
-        this.mongoClient = mongoClient;
+    private final Connection connection;
+
+    public MongoController(Connection connection) {
+        this.connection = connection;
     }
 
     @Put("/servers")
@@ -40,7 +40,7 @@ public class MongoController {
         try{
             Server server = new Server(name, id, language, framework);
             Single<Server> carrier = Single
-                    .fromPublisher(getCollection().insertOne(server))
+                    .fromPublisher(connection.getCollection().insertOne(server))
                     .map(success -> server);
             return HttpResponse.ok().body(carrier);
         }
@@ -56,8 +56,9 @@ public class MongoController {
     public HttpResponse getall() {
         try{
             Single<List<Server>> carrier = Flowable
-                    .fromPublisher(getCollection().find()).toList();
+                    .fromPublisher(connection.getCollection().find()).toList();
             return HttpResponse.ok().body(carrier);
+
         }
         catch (Exception e){
             return HttpResponse.serverError().body(e);
@@ -70,12 +71,15 @@ public class MongoController {
     )
     public HttpResponse find(@Parameter(description="The name of the server") @NotBlank @QueryValue String name) {
         try{
-            Maybe<Server> carrier = Flowable.fromPublisher(
-                    getCollection()
-                            .find(eq("name", name))
-                            .limit(1)
-            ).firstElement();
 
+            Document myDoc = connection.getConn().find(eq("name", name)).first();
+
+            if (myDoc == null) {
+                return HttpResponse.notFound().body(myDoc);
+            }
+
+            Single<List<Server>> carrier = Flowable
+                    .fromPublisher(connection.getCollection().find(eq("name", name))).toList();
             return HttpResponse.ok().body(carrier);
         }
         catch (Exception e){
@@ -90,7 +94,7 @@ public class MongoController {
     public HttpResponse del(@Parameter(description="The id of the server") @NotBlank @QueryValue Integer id){
         try{
             Bson filter = Filters.eq("_id", id);
-            Flowable<DeleteResult> carrier = Flowable.fromPublisher(getCollection().deleteOne(filter));
+            Flowable<DeleteResult> carrier = Flowable.fromPublisher(connection.getCollection().deleteOne(filter));
             return HttpResponse.ok().body(carrier);
         }
         catch (Exception e){
@@ -98,9 +102,5 @@ public class MongoController {
         }
     }
 
-    private MongoCollection<Server> getCollection() {
-        return mongoClient
-                .getDatabase("micronaut")
-                .getCollection("servers", Server.class);
-    }
+
 }
