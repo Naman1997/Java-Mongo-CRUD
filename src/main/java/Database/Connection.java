@@ -27,7 +27,7 @@ public class Connection {
     }
 
     public com.mongodb.client.MongoCollection<Document> getConn(){
-        com.mongodb.client.MongoClient mongoClient1 = MongoClients.create("mongodb://localhost:27017");
+        com.mongodb.client.MongoClient mongoClient1 = MongoClients.create("mongodb://mongodb:27017");
         MongoDatabase database =  mongoClient1.getDatabase("micronaut");
         com.mongodb.client.MongoCollection<Document> coll = database.getCollection("servers");
 

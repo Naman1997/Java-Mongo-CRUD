@@ -17,4 +17,4 @@ micronaut:
 
 ---
 mongodb:
-  uri: "mongodb://localhost:27017"
+  uri: "mongodb://mongodb:27017"

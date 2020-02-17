@@ -1,10 +1,10 @@
 var app = new Vue({
     el: '#add',
     data: {
-        dict:{}
+        dict:{},
     },
     methods: {
-        addServer(){
+        addServer(isAction=true){
 
             var data = "";
 
@@ -15,18 +15,32 @@ var app = new Vue({
                 var len = incoming.length;
                 var dict = {};
 
-                for(i=0; i<incoming.length;i++){
+                for(i=0; i<len;i++){
                         dict[i] = incoming[i];
                 }
 
                 this.dict = dict;
 
-            });
+            }).catch(error => {
+                      if (error.response && isAction) {
+                        var dict = {};
+                        this.dict = dict;
+                        alert("No such record found");
+                      }
+                      else if (error.response && !isAction) {
+                        var dict = {};
+                        this.dict = dict;
+                       }
+                       else{
+                        console.log(error.response);
+                       }
+
+                    });
 
         },
         deleteServer(id){
             axios.delete("http://localhost:8080/delete?id="+id);
-            window.location.reload();
+            this.addServer(false);
         }
     }
 });

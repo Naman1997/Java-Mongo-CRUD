@@ -42,6 +42,7 @@ var app = new Vue({
                 language: slanguage,
                 framework: sframework
               });
+              window.location.reload();
 
         },
         deleteServer(id){
