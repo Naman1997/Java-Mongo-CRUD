@@ -60,7 +60,7 @@ $ ./gradlew run
 Now if you open http://localhost:8080/ on your browser of choice, you should be able to access the front-end of the application.
 
 ### Front-end Endpoints(GUI)
-This application has 4 front-end endpoints that can be seen on the browser at of the time of writing.
+This application has 4 front-end endpoints that can be seen on the browser at the time of writing.
 
 | Description | Endpoint |
 | ------ | ------ |
@@ -73,7 +73,7 @@ This application has 4 front-end endpoints that can be seen on the browser at of
 
 You can access the API documentation of the app at [Swagger](https://app.swaggerhub.com/apis-docs/Naman1997/Kaiburr-Crud/1.0) OR you can access the Swagger endpoint after running the server!
 
-This application has 4 API endpoints at of the time of writing.
+This application has 4 API endpoints at the time of writing.
 
 | Method | Endpoint |
 | ------ | ------ |
