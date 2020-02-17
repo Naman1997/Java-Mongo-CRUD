@@ -1,0 +1,84 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> CRUD Data Table for Database</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="addvue.js" defer></script>
+
+    <!-- Axios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+</head>
+<body>
+<div id="add" >
+
+    <div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2>Manage <b>Servers</b></h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="../index.html" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Home</span></a>
+                        <a href="add.html" class="btn btn-info"><i class="material-icons">&#xE15C;</i> <span>Reset</span></a>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Language</th>
+                    <th>Framework</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr template v-for="(key,value,index) in dict" v-bind:id="dict[index].id">
+                    <td>{{dict[index].id}}</td>
+                    <td>{{dict[index].name}}</td>
+                    <td>{{dict[index].language}}</td>
+                    <td>{{dict[index].framework}}</td>
+                    <td>
+                        <button class="delete material-icons" data-toggle="tooltip" v-on:click="deleteServer(dict[index].id)">&#xE872;</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="search">
+        <form>
+            <div class="modal-header  modal-fade">
+                <h4 class="modal-title">Search Server by name</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input id="data" type="text" class="form-control" required>
+                </div>
+            </div>
+        </form>
+        <div >
+            <button v-on:click="addServer" type="submit" class="btn btn-info" >Search</button>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

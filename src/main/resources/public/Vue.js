@@ -1,4 +1,4 @@
-var app = new Vue({ 
+var app = new Vue({
     el: '#app',
     data: {
         message: 'Projects',
@@ -13,7 +13,7 @@ var app = new Vue({
                 var incoming = response.data;
                 var len = incoming.length;
                 var dict = {};
-                
+
                 for(i=0; i<incoming.length;i++){
                         dict[i] = incoming[i];
                 }
