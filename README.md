@@ -21,6 +21,9 @@ Dillinger uses a number of open source projects to work properly:
 * [Dillinger](https://dillinger.io/) - Markdown Editor
 
 #### Building with Docker
+If you're using **Windows** please make sure that your git checks out files with Unix-style endings on windows.
+If this is not the issue then the app will give out an error like : **env: bash\r: No such file or directory**
+For more info please go [HERE](https://stackoverflow.com/questions/29045140/env-bash-r-no-such-file-or-directory)
 ```sh
 $ git clone https://github.com/Naman1997/Micronaut-Mongo-App.git
 $ cd Micronaut-Mongo-App
