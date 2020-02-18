@@ -27,7 +27,6 @@ For more info please go [HERE](https://stackoverflow.com/questions/29045140/env-
 ```sh
 $ git clone https://github.com/Naman1997/Micronaut-Mongo-App.git
 $ cd Micronaut-Mongo-App
-$ ./gradlew assemble
 $ sudo docker-compose up -d
 
 ```
