@@ -6,6 +6,8 @@ This is a server management application that can do basic tasks like:
   - Remove a server
   - Search for servers
 
+Check out the demo [Youtube Video](https://youtu.be/W8o-V6oXDtU)!
+
 ### Tech
 
 Dillinger uses a number of open source projects to work properly:
@@ -22,7 +24,6 @@ Dillinger uses a number of open source projects to work properly:
 ```sh
 $ git clone https://github.com/Naman1997/Micronaut-Mongo-App.git
 $ cd Micronaut-Mongo-App
-$ ./gradlew assemble
 $ sudo docker-compose up -d
 
 ```
