@@ -1,0 +1,204 @@
+openapi: 3.0.1
+info:
+  title: Kaiburr Api
+  description: CRUD API to manage a collection in mongodb
+  contact:
+    name: Naman Arora
+    url: https://naman-portfolio.herokuapp.com/
+    email: naman.arora2016@vitstudent.ac.in
+  version: "1.0"
+paths:
+  /servers:
+    put:
+      summary: Add a new server to db
+      description: This endpoint is used to add details of a new server to the mongodb
+        that is configured
+      operationId: save
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - framework
+              - id
+              - language
+              - name
+              type: object
+              properties:
+                name:
+                  minLength: 1
+                  type: string
+                  nullable: false
+                id:
+                  type: integer
+                  format: int32
+                  nullable: false
+                language:
+                  minLength: 1
+                  type: string
+                  nullable: false
+                framework:
+                  minLength: 1
+                  type: string
+                  nullable: false
+        required: true
+      responses:
+        200:
+          description: New Server Added. Returns the server that is added.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+              examples:
+                example:
+                  value:
+                    name: fedora
+                    id: 200
+                    language: Rust
+                    framework: Revel
+        400:
+          description: Invalid Request Error like insufficient parameters passed
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    message: Required argument [String framework] not specified
+                    path: /framework
+                    _links:
+                      self:
+                        href: /servers
+                        templated: false
+        500:
+          description: Server Errors like duplicate keys
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    message: 'Internal Server Error: E11000 duplicate key error collection:
+                      micronaut.servers index: _id_ dup key: { _id: 111 }'
+  /getall:
+    get:
+      summary: Get all the servers and their details
+      description: This endpoint is used to get all the existing servers in the database
+        along with their details
+      operationId: getall
+      parameters: []
+      responses:
+        200:
+          description: Servers found. Returns all servers.
+          content:
+            application/json:
+              examples:
+                example:
+                  value: |-
+                    [
+                        {
+                            "name": "Arch",
+                            "id": 1,
+                            "language": "Python",
+                            "framework": "Flask"
+                        },
+                        {
+                            "name": "Mint",
+                            "id": 2,
+                            "language": "Ruby",
+                            "framework": "Rails"
+                        }
+                    ]
+  /getbyname:
+    get:
+      summary: Get a specific server and its details given its name
+      description: This endpoint is used to get all the existing servers whose name
+        matches a name provided
+      operationId: find
+      parameters:
+      - name: name
+        in: query
+        description: The name of the server
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      responses:
+        200:
+          description: Servers found. Returns filtered servers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+              examples:
+                example:
+                  value: |-
+                    [
+                        {
+                            "name": "Arch",
+                            "id": 1,
+                            "language": "Python",
+                            "framework": "Flask"
+                        },
+                        {
+                            "name": "Arch",
+                            "id": 3,
+                            "language": "Java",
+                            "framework": "Micronaut"
+                        }
+                    ]
+        400:
+          description: No servers found.
+          content:
+            text/plain:
+              examples:
+                example:
+                  value: Not found any records
+  /delete:
+    delete:
+      summary: Delete a specific server and its details given its id
+      description: This endpoint is used to delete a specific server in the database
+        given its id
+      operationId: del
+      parameters:
+      - name: id
+        in: query
+        description: The id of the server
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: Server found and deleted
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    deletedCount: 1
+        400:
+          description: No server with the specified ID found.
+          content:
+            text/plain:
+              examples:
+                example:
+                  value: Not found any records
+components:
+  schemas:
+    Server:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Server name
+        id:
+          type: integer
+          description: Server id
+          format: int32
+        language:
+          type: string
+          description: Server language
+        framework:
+          type: string
+          description: Server framework
+      description: Server description

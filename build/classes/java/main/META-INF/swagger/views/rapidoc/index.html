@@ -1,0 +1,33 @@
+<!doctype html>
+<!-- Important: must specify, else rendering will be effected -->
+<html>
+    <head>
+        <title>kaiburr-api-1.0</title>
+        <!-- Important: The Custom element uses utf8 characters -->
+        <meta charset='utf-8' />
+        <meta name='viewport' content='width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes' />
+        <script src='https://unpkg.com/rapidoc/dist/rapidoc-min.js'></script>
+    </head>
+    <body>
+        <rapi-doc id='rapidoc' show-header='false' theme='dark' layout='row'></rapi-doc>
+        <script>
+            const extract = function(v) {
+                    return decodeURIComponent(v.replace(/(?:(?:^|.*;\s*)contextPath\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
+                },
+                cookie = extract(document.cookie),
+                contextPath = cookie === '' ? extract(window.location.search.substring(1)) : cookie,
+                rapidoc = document.getElementById('rapidoc');
+            rapidoc.setAttribute('spec-url', contextPath + '/swagger/kaiburr-api-1.0.yml');
+            if (contextPath !== '') {
+                setTimeout(function() {
+                    if (rapidoc.resolvedSpec) {
+                        rapidoc.resolvedSpec.tags.forEach(tag => tag.paths.forEach(path => path.path = contextPath + path.path));
+                        rapidoc.requestUpdate();
+                    } else {
+                        setTimeout(this, 200);
+                    }
+                }, 200);
+            }
+        </script>
+    </body>
+</html>

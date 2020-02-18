@@ -1,0 +1,6 @@
+Database.$ConnectionDefinitionClass
+Database.$$ConnectionDefinition$InterceptedDefinitionClass
+crud.$MethodImplDefinitionClass
+crud.$$MethodImplDefinition$InterceptedDefinitionClass
+crud.$$MongoControllerDefinition$InterceptedDefinitionClass
+crud.$MongoControllerDefinitionClass
