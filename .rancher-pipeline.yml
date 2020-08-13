@@ -1,10 +1,11 @@
-﻿stages:
+stages:
 - name: change directory
   steps:
   - publishImageConfig:
-      dockerfilePath: ./Micronaut-Mongo-App/Dockerfile
+      dockerfilePath: ./Dockerfile
       buildContext: .
       tag: base-docker-image
+      registry: 127.0.0.1:34557
   - runScriptConfig:
       image: java:8
       shellScript: sudo docker-compose up
