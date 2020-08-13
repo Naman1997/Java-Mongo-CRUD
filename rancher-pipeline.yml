@@ -1,0 +1,22 @@
+﻿stages:
+- name: change directory
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ./Micronaut-Mongo-App/Dockerfile
+      buildContext: .
+      tag: base-docker-image
+  - runScriptConfig:
+      image: java:8
+      shellScript: sudo docker-compose up
+- name: test
+  steps:
+  - runScriptConfig:
+      image: python:latest
+      shellScript: |-
+        import requests
+        URL = "http://localhost:8080"
+        r = requests.get(url = URL)
+        data = r.json()
+        print(data)
+timeout: 60
+notification: {}
