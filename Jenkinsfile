@@ -1,4 +1,9 @@
- stage('Initialize'){
-        def dockerHome = tool 'myDocker'
-        env.PATH = "${dockerHome}/bin:${env.PATH}"
+node {
+    checkout scm
+
+    def customImage = docker.build("my-image:latest")
+
+    customImage.inside {
+        echo 'make test'
     }
+}
