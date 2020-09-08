@@ -1,9 +1,11 @@
-node {
-    checkout scm
-
-    def customImage = docker.build("my-image:latest")
-
-    customImage.inside {
-        echo 'make test'
+pipeline {
+    agent any {
+        stages {
+            stage("build") {
+                steps{
+                    echo "Hello Jenkins!"
+                }
+            }
+        }
     }
 }
