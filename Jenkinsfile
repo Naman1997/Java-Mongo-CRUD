@@ -3,7 +3,12 @@ pipeline {
     stages {
         stage("build") {
             steps{
-                echo "Hello Jenkins!"
+                mvn clean install
+            }
+        }
+        stage("test") {
+            steps{
+                mvn dependency:tree
             }
         }
     }
