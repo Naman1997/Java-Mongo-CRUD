@@ -1,18 +1,18 @@
 pipeline {
     agent any
-    tools {
-        gradle 'Gradle'
-        docker 'Docker'
-    }
     stages {
         stage("build") {
             steps{
-                sh "gradle build"
+                withGradle() {
+                    sh "./gradlew build"
+                }
             }
         }
         stage("test") {
             steps{
-                sh "docker build --tag testImage:latest ."
+                docker('Docker') {
+                    sh "docker build --tag testImage:latest ."
+                }
             }
         }
     }
