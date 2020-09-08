@@ -1,9 +1,11 @@
-node {
-    checkout scm
-
-    def customImage = docker.build("my-image:latest")
-
-    customImage.inside {
-        echo 'Hello from container'
+pipeline {
+    agent { dockerfile true }
+    stages {
+        stage('Test') {
+            steps {
+                sh 'git --version'
+                sh 'python3 --version'
+            }
+        }
     }
 }
