@@ -1,14 +1,18 @@
 pipeline {
     agent any
+    tools {
+        gradle 'Gradle'
+        docker 'Docker'
+    }
     stages {
         stage("build") {
             steps{
-                mvn clean install
+                sh "gradle build"
             }
         }
         stage("test") {
             steps{
-                mvn dependency:tree
+                sh "docker build --tag testImage:latest ."
             }
         }
     }
