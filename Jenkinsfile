@@ -1,19 +1,9 @@
-pipeline {
-    agent any
-    stages {
-        stage("build") {
-            steps{
-                withGradle() {
-                    sh "./gradlew build"
-                }
-            }
-        }
-        stage("test") {
-            steps{
-                docker('Docker') {
-                    sh "docker build --tag testImage:latest ."
-                }
-            }
-        }
+node {
+    checkout scm
+
+    def customImage = docker.build("my-image:latest")
+
+    customImage.inside {
+        echo 'Hello from container'
     }
 }
