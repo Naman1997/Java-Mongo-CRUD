@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('List Files') {
             steps {
-                ls
+                sh 'ls'
             }
         }
         stage('Test') {
