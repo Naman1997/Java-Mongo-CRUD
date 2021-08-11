@@ -10,8 +10,6 @@ Check out the demo [Youtube Video](https://youtu.be/W8o-V6oXDtU)!
 
 ### Tech
 
-Dillinger uses a number of open source projects to work properly:
-
 * [VueJS](https://vuejs.org/) - HTML enhanced for web apps!
 * [Micronaut](https://micronaut.io/) - A modern, JVM-based, full-stack framework
 * [Axios](https://github.com/axios/axios) - Promise based HTTP client for the browser and node.js
